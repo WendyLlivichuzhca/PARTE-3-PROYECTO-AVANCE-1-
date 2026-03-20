@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduCampus — Opción 2: Dark Premium</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --surface3: #1c1c28;
+    --border: #1e1e2e;
+    --border2: #282840;
+    --text: #e8e8f0;
+    --text2: #8888aa;
+    --text3: #4444666;
+    --neon: #7c3aed;
+    --neon2: #a855f7;
+    --neon-glow: rgba(124,58,237,0.35);
+    --cyan: #06b6d4;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --pink: #ec4899;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 255px;
+    min-height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow: hidden;
+  }
+
+  /* Neon glow top line */
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon2), transparent);
+  }
+
+  .logo-area {
+    padding: 28px 22px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    padding: 8px 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .logo-badge span { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+  .logo-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .logo-title span { color: var(--neon2); }
+  .logo-sub {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 3px;
+  }
+  .online-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-right: 5px;
+    box-shadow: 0 0 6px var(--green);
+    vertical-align: middle;
+  }
+
+  .nav-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px 22px 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 18px;
+    margin: 1px 10px;
+    border-radius: 10px;
+    color: var(--text2);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-item:hover {
+    background: var(--surface2);
+    color: var(--text);
+  }
+  .nav-item.active {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(168,85,247,0.12));
+    color: var(--neon2);
+    font-weight: 600;
+    border: 1px solid rgba(124,58,237,0.25);
+  }
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--neon2);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--neon2);
+  }
+
+  .nav-icon-wrap {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--surface3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .nav-item.active .nav-icon-wrap {
+    background: rgba(124,58,237,0.25);
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--neon);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--neon-glow);
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .user-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: 12px;
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .user-row:hover { background: var(--surface3); }
+  .user-ava {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--neon), var(--pink));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .user-role { font-size: 11px; color: var(--text2); }
+  .user-caret { margin-left: auto; color: var(--text2); font-size: 12px; }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 255px;
+    flex: 1;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Topbar */
+  .topbar {
+    height: 64px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .breadcrumb { font-size: 13px; color: var(--text2); flex: 1; }
+  .breadcrumb span { color: var(--text); font-weight: 600; }
+  .breadcrumb::before { content: '⚡ Dashboard / '; }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--text2);
+    width: 220px;
+    cursor: text;
+    transition: border-color 0.2s;
+  }
+  .search-box:hover { border-color: var(--neon); color: var(--text); }
+
+  .notif-btn {
+    width: 38px; height: 38px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .notif-btn:hover { border-color: var(--neon); }
+  .notif-dot {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 8px var(--red);
+  }
+
+  .btn-neon {
+    padding: 9px 18px;
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px var(--neon-glow);
+  }
+  .btn-neon:hover { transform: translateY(-1px); box-shadow: 0 6px 25px var(--neon-glow); }
+
+  /* Content area */
+  .content {
+    padding: 28px 32px;
+    flex: 1;
+  }
+
+  .page-heading {
+    margin-bottom: 28px;
+  }
+  .page-heading h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .page-heading p {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .stat-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+  }
+  .stat-card.s1::after { background: linear-gradient(90deg, transparent, var(--neon2), transparent); }
+  .stat-card.s2::after { background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
+  .stat-card.s3::after { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+  .stat-card.s4::after { background: linear-gradient(90deg, transparent, var(--orange), transparent); }
+
+  .stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .si-purple { background: rgba(124,58,237,0.15); box-shadow: 0 0 20px rgba(124,58,237,0.15); }
+  .si-cyan   { background: rgba(6,182,212,0.15);  box-shadow: 0 0 20px rgba(6,182,212,0.15); }
+  .si-green  { background: rgba(16,185,129,0.15); box-shadow: 0 0 20px rgba(16,185,129,0.15); }
+  .si-orange { background: rgba(245,158,11,0.15); box-shadow: 0 0 20px rgba(245,158,11,0.15); }
+
+  .stat-change {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .sc-up   { background: rgba(16,185,129,0.15); color: var(--green); }
+  .sc-down { background: rgba(239,68,68,0.15);  color: var(--red); }
+
+  .stat-val { font-size: 34px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 5px; letter-spacing: -1px; }
+  .stat-lbl { font-size: 12px; color: var(--text2); font-weight: 500; }
+
+  /* Grid layout */
+  .mid-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ch-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .ch-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .ch-action { font-size: 12px; color: var(--neon2); cursor: pointer; font-weight: 600; }
+  .ch-action:hover { text-decoration: underline; }
+
+  /* Table */
+  .table-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 22px;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+    cursor: default;
+  }
+  .table-row:hover { background: var(--surface2); }
+  .table-row:last-child { border-bottom: none; }
+
+  .tr-num { font-size: 12px; color: var(--text2); width: 20px; text-align: center; }
+  .tr-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--surface3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .tr-info { flex: 1; }
+  .tr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .tr-meta { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  .mini-bar-wrap { width: 80px; }
+  .mini-bar-txt { font-size: 11px; color: var(--text2); text-align: right; margin-bottom: 4px; font-weight: 600; }
+  .mini-bar { height: 4px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; border-radius: 4px; }
+
+  .pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill-green  { background: rgba(16,185,129,0.15);  color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+  .pill-orange { background: rgba(245,158,11,0.15);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+  .pill-purple { background: rgba(168,85,247,0.15);  color: #a855f7; border: 1px solid rgba(168,85,247,0.2); }
+  .pill-red    { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+
+  /* Activity */
+  .act-row {
+    display: flex;
+    gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .act-row:last-child { border-bottom: none; }
+  .act-ico {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .aico-p { background: rgba(168,85,247,0.15); }
+  .aico-c { background: rgba(6,182,212,0.15); }
+  .aico-g { background: rgba(16,185,129,0.15); }
+  .aico-o { background: rgba(245,158,11,0.15); }
+
+  .act-text { font-size: 12.5px; color: var(--text2); line-height: 1.5; }
+  .act-text strong { color: var(--text); }
+  .act-time { font-size: 11px; color: #444466; margin-top: 3px; }
+
+  /* Bottom cards */
+  .bot-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .bot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+  .bot-card:hover { border-color: var(--border2); }
+  .bc-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .bc-val { font-size: 24px; font-weight: 800; color: var(--text); }
+  .bc-lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  .wm {
+    text-align: center;
+    font-size: 11px;
+    color: #2a2a3a;
+    margin-top: 36px;
+    padding-bottom: 10px;
+  }
+  .wm span { color: var(--neon2); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo-badge">
+      <span>EDU</span>
+      <span style="opacity:0.7">CAMPUS</span>
+    </div>
+    <div class="logo-title">Plataforma <span>Pro</span></div>
+    <div class="logo-sub"><span class="online-dot"></span>Sistema en línea · v2.4</div>
+  </div>
+
+  <div class="nav-section-label">Principal</div>
+  <a class="nav-item active" href="#">
+    <div class="nav-icon-wrap">⚡</div>
+    Dashboard
+  </a>
+
+  <div class="nav-section-label">Administración</div>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">👤</div>
+    Instructores
+    <span class="nav-badge">24</span>
+  </a>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">🎓</div>
+    Estudiantes
+    <span class="nav-badge">387</span>
+  </a>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">📚</div>
+    Cursos
+  </a>
+
+  <div class="nav-section-label">Academia</div>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">💳</div>
+    Inscripciones
+  </a>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">📂</div>
+    Contenido
+  </a>
+  <a class="nav-item" href="#">
+    <div class="nav-icon-wrap">📝</div>
+    Evaluaciones
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="user-row">
+      <div class="user-ava">W</div>
+      <div>
+        <div class="user-name">Wendy L.</div>
+        <div class="user-role">Administradora</div>
+      </div>
+      <div class="user-caret">⋯</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="breadcrumb"><span>Dashboard</span></div>
+    <div class="search-box">🔍 &nbsp; Buscar...</div>
+    <div class="notif-btn">🔔<div class="notif-dot"></div></div>
+    <button class="btn-neon">+ Nuevo Curso</button>
+  </div>
+
+  <div class="content">
+    <div class="page-heading">
+      <h1>Panel Principal</h1>
+      <p>Bienvenida de nuevo, <strong style="color:#a855f7">Wendy</strong> — aquí está el resumen de hoy</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card s1">
+        <div class="stat-header">
+          <div class="stat-icon si-purple">👨‍🏫</div>
+          <span class="stat-change sc-up">↑ +3 este mes</span>
+        </div>
+        <div class="stat-val">24</div>
+        <div class="stat-lbl">Instructores activos</div>
+      </div>
+      <div class="stat-card s2">
+        <div class="stat-header">
+          <div class="stat-icon si-cyan">🎓</div>
+          <span class="stat-change sc-up">↑ +12 esta semana</span>
+        </div>
+        <div class="stat-val">387</div>
+        <div class="stat-lbl">Estudiantes inscritos</div>
+      </div>
+      <div class="stat-card s3">
+        <div class="stat-header">
+          <div class="stat-icon si-green">📚</div>
+          <span class="stat-change sc-up">↑ +2 nuevos</span>
+        </div>
+        <div class="stat-val">56</div>
+        <div class="stat-lbl">Cursos publicados</div>
+      </div>
+      <div class="stat-card s4">
+        <div class="stat-header">
+          <div class="stat-icon si-orange">💰</div>
+          <span class="stat-change sc-up">↑ +18%</span>
+        </div>
+        <div class="stat-val">$8.4k</div>
+        <div class="stat-lbl">Ingresos del mes</div>
+      </div>
+    </div>
+
+    <!-- MID GRID -->
+    <div class="mid-grid">
+      <!-- Courses table -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="ch-title">📚 Cursos activos</div>
+            <div class="ch-sub">56 cursos en total</div>
+          </div>
+          <span class="ch-action">Ver todos →</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-num">1</span>
+          <div class="tr-icon">🐍</div>
+          <div class="tr-info">
+            <div class="tr-name">Python Avanzado</div>
+            <div class="tr-meta">Dr. García · 42 est.</div>
+          </div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-txt">78%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:78%;background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+          </div>
+          <span class="pill pill-green">Activo</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-num">2</span>
+          <div class="tr-icon">🎨</div>
+          <div class="tr-info">
+            <div class="tr-name">Diseño UX/UI</div>
+            <div class="tr-meta">Lic. Martínez · 35 est.</div>
+          </div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-txt">55%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:55%;background:linear-gradient(90deg,#ec4899,#f43f5e)"></div></div>
+          </div>
+          <span class="pill pill-orange">En curso</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-num">3</span>
+          <div class="tr-icon">📊</div>
+          <div class="tr-info">
+            <div class="tr-name">Excel Empresarial</div>
+            <div class="tr-meta">Prof. López · 28 est.</div>
+          </div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-txt">92%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:92%;background:linear-gradient(90deg,#06b6d4,#0ea5e9)"></div></div>
+          </div>
+          <span class="pill pill-green">Activo</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-num">4</span>
+          <div class="tr-icon">🤖</div>
+          <div class="tr-info">
+            <div class="tr-name">Inteligencia Artificial</div>
+            <div class="tr-meta">Dr. Ruiz · 61 est.</div>
+          </div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-txt">30%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:30%;background:linear-gradient(90deg,#f59e0b,#ef4444)"></div></div>
+          </div>
+          <span class="pill pill-purple">Nuevo</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-num">5</span>
+          <div class="tr-icon">⚛️</div>
+          <div class="tr-info">
+            <div class="tr-name">React desde Cero</div>
+            <div class="tr-meta">Ing. Soto · 19 est.</div>
+          </div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-txt">10%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:10%;background:linear-gradient(90deg,#10b981,#059669)"></div></div>
+          </div>
+          <span class="pill pill-purple">Reciente</span>
+        </div>
+      </div>
+
+      <!-- Activity -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="ch-title">🔔 Actividad</div>
+            <div class="ch-sub">Tiempo real</div>
+          </div>
+        </div>
+        <div class="act-row">
+          <div class="act-ico aico-p">📝</div>
+          <div>
+            <div class="act-text"><strong>María G.</strong> completó quiz de Python</div>
+            <div class="act-time">Hace 5 min</div>
+          </div>
+        </div>
+        <div class="act-row">
+          <div class="act-ico aico-c">🎓</div>
+          <div>
+            <div class="act-text"><strong>Carlos R.</strong> se inscribió en UX/UI</div>
+            <div class="act-time">Hace 23 min</div>
+          </div>
+        </div>
+        <div class="act-row">
+          <div class="act-ico aico-g">💳</div>
+          <div>
+            <div class="act-text"><strong>Ana Torres</strong> realizó pago de $299</div>
+            <div class="act-time">Hace 1 hora</div>
+          </div>
+        </div>
+        <div class="act-row">
+          <div class="act-ico aico-c">📚</div>
+          <div>
+            <div class="act-text">Nuevo curso <strong>React desde Cero</strong> publicado</div>
+            <div class="act-time">Hace 2 horas</div>
+          </div>
+        </div>
+        <div class="act-row">
+          <div class="act-ico aico-p">👤</div>
+          <div>
+            <div class="act-text"><strong>Prof. Elena V.</strong> subió 3 materiales</div>
+            <div class="act-time">Hace 3 horas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bot-row">
+      <div class="bot-card">
+        <div class="bc-icon" style="background:rgba(6,182,212,0.12)">📂</div>
+        <div>
+          <div class="bc-val">142</div>
+          <div class="bc-lbl">Materiales subidos</div>
+        </div>
+      </div>
+      <div class="bot-card">
+        <div class="bc-icon" style="background:rgba(168,85,247,0.12)">📝</div>
+        <div>
+          <div class="bc-val">38</div>
+          <div class="bc-lbl">Evaluaciones activas</div>
+        </div>
+      </div>
+      <div class="bot-card">
+        <div class="bc-icon" style="background:rgba(16,185,129,0.12)">⭐</div>
+        <div>
+          <div class="bc-val">94%</div>
+          <div class="bc-lbl">Satisfacción general</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wm">✦ <span>Opción 2 — Dark Premium</span> · EduCampus Diseño Propuesto</div>
+  </div>
+</main>
+
+</body>
+</html>
