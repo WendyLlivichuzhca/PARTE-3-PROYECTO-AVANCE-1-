@@ -111,11 +111,7 @@ SCHEMA_STATEMENTS = [
 
 
 def initialize_database():
-    connection = get_connection()
-    try:
+    with get_connection() as connection:
         cursor = connection.cursor()
         for statement in SCHEMA_STATEMENTS:
             cursor.execute(statement)
-        connection.commit()
-    finally:
-        connection.close()

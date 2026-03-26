@@ -11,3 +11,7 @@ materiales_descargados/
 .vscode/
 *.bak
 *.tmp
+build/
+dist/
+output/
+*.spec.bak

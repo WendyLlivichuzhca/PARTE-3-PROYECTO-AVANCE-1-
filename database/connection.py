@@ -1,13 +1,19 @@
+from contextlib import contextmanager
 import sqlite3
-from pathlib import Path
+
+from utils.app_paths import get_database_path
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR / "sistema_cursos.db"
+DB_PATH = get_database_path()
 
 
+@contextmanager
 def get_connection():
     connection = sqlite3.connect(DB_PATH)
-    connection.row_factory = sqlite3.Row
-    connection.execute("PRAGMA foreign_keys = ON")
-    return connection
+    try:
+        connection.row_factory = sqlite3.Row
+        connection.execute("PRAGMA foreign_keys = ON")
+        yield connection
+        connection.commit()
+    finally:
+        connection.close()

@@ -1,6 +1,5 @@
-from pathlib import Path
-
 from database.connection import get_connection
+from utils.app_paths import get_certificates_dir
 from utils.pdf_generator import generate_certificate
 
 
@@ -236,7 +235,7 @@ class CourseService:
             if row["progress"] < 100:
                 raise ValueError("Solo se genera certificado con 100% de progreso.")
 
-            certificates_dir = Path(__file__).resolve().parent.parent / "certificados"
+            certificates_dir = get_certificates_dir()
             pdf_path = generate_certificate(
                 row["student_name"], row["course_name"], certificates_dir
             )

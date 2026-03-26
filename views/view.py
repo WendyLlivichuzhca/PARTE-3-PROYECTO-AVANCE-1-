@@ -11,6 +11,7 @@ from urllib.request import urlretrieve
 
 import customtkinter as ctk
 
+from utils.app_paths import get_downloads_dir
 from utils.i18n import tr
 
 # ══════════════════════════════════════════════════════════════
@@ -2588,7 +2589,7 @@ class View(ctk.CTk):
                 else:
                     parsed = urlparse(url)
                     fname  = Path(parsed.path).name or f"material_{values[0]}.pdf"
-                    dl_dir = Path(__file__).resolve().parent.parent / "materiales_descargados"
+                    dl_dir = get_downloads_dir()
                     dl_dir.mkdir(parents=True, exist_ok=True)
                     dest   = dl_dir / fname
                     urlretrieve(url, dest)
@@ -2603,7 +2604,7 @@ class View(ctk.CTk):
                 else:
                     parsed = urlparse(url)
                     fname  = Path(parsed.path).name or f"material_{values[0]}"
-                    dl_dir = Path(__file__).resolve().parent.parent / "materiales_descargados"
+                    dl_dir = get_downloads_dir()
                     dl_dir.mkdir(parents=True, exist_ok=True)
                     dest   = dl_dir / fname
                     urlretrieve(url, dest)
